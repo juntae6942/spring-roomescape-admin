@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -33,18 +34,12 @@ public class JdbcReservationRepository implements ReservationRepository {
         String sql = "INSERT INTO reservation(name, date, time) "
                 + "VALUES(:name, :date, :time)";
 
-        SqlParameterSource params = new MapSqlParameterSource()
-                .addValue("name", reservation.getName())
-                .addValue("date", reservation.getDate())
-                .addValue("time", reservation.getTime());
-
+        SqlParameterSource params = new BeanPropertySqlParameterSource(reservation);
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(sql, params, keyHolder);
-
         long generatedId = Objects.requireNonNull(keyHolder.getKey()).longValue();
         reservation.setId(generatedId);
-
         return reservation;
     }
 
