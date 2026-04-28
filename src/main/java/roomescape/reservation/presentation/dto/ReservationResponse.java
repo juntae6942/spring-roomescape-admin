@@ -1,16 +1,16 @@
-package roomescape.presentation.dto;
+package roomescape.reservation.presentation.dto;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import lombok.Builder;
-import roomescape.domain.Reservation;
+import roomescape.reservation.domain.Reservation;
+import roomescape.time.domain.ReservationTime;
 
 @Builder
 public record ReservationResponse(
         Long id,
         String name,
         LocalDate date,
-        LocalTime time
+        ReservationTime time
 ) {
     public static ReservationResponse from(Reservation reservation) {
         return ReservationResponse.builder()
