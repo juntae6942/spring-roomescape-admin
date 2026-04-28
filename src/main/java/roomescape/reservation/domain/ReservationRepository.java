@@ -1,4 +1,4 @@
-package roomescape.domain;
+package roomescape.reservation.domain;
 
 import java.util.List;
 import org.springframework.stereotype.Repository;
