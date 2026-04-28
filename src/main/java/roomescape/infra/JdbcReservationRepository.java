@@ -19,14 +19,12 @@ import roomescape.domain.ReservationRepository;
 public class JdbcReservationRepository implements ReservationRepository {
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
-    private final RowMapper<Reservation> rowMapper = (resultSet, rowNum) -> {
-        return Reservation.builder()
-                .id(resultSet.getLong("id"))
-                .name(resultSet.getString("name"))
-                .date(resultSet.getDate("date").toLocalDate())
-                .time(resultSet.getTime("time").toLocalTime())
-                .build();
-    };
+    private final RowMapper<Reservation> rowMapper = (resultSet, rowNum) -> Reservation.builder()
+            .id(resultSet.getLong("id"))
+            .name(resultSet.getString("name"))
+            .date(resultSet.getDate("date").toLocalDate())
+            .time(resultSet.getTime("time").toLocalTime())
+            .build();
 
     @Override
     public Reservation save(Reservation reservation) {
