@@ -1,11 +1,11 @@
-package roomescape.infra;
+package roomescape.reservation.infra;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
-import roomescape.domain.Reservation;
-import roomescape.domain.ReservationRepository;
+import roomescape.reservation.domain.Reservation;
+import roomescape.reservation.domain.ReservationRepository;
 
 public class InMemoryReservationRepository implements ReservationRepository {
 
