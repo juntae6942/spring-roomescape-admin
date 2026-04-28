@@ -1,0 +1,20 @@
+package roomescape.domain;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Builder
+@AllArgsConstructor
+public class Reservation {
+
+    @Setter
+    private Long id;
+    private String name;
+    private LocalDate date;
+    private LocalTime time;
+}
