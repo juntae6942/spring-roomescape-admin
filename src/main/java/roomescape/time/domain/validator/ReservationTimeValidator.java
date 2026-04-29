@@ -19,7 +19,7 @@ public class ReservationTimeValidator {
             throw new ReservationTimeInUseException("해당 시간에 예약이 존재합니다.");
         }
         if (!reservationTimeRepository.existsById(timeId)) {
-            throw new ReservationTimeNotFoundException("해당하는 시간ID가 존재하지 않습니다.");
+            throw new ReservationTimeNotFoundException("존재하지 않는 시간ID 입니다.");
         }
     }
 }

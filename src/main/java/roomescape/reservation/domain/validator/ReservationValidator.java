@@ -13,7 +13,7 @@ public class ReservationValidator {
 
     public void validateDeletable(Long id) {
         if (!repository.existsById(id)) {
-            throw new ReservationNotFoundException();
+            throw new ReservationNotFoundException("존재하지 않는 예약ID 입니다.");
         }
     }
 }
