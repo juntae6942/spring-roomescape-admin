@@ -1,5 +1,6 @@
 package roomescape.time.domain.validator;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -7,7 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+import roomescape.reservation.application.ReservationService;
+import roomescape.reservation.presentation.dto.ReservationRequest;
 import roomescape.time.application.ReservationTimeService;
+import roomescape.time.domain.exception.ReservationTimeInUseException;
 import roomescape.time.domain.exception.ReservationTimeNotFoundException;
 import roomescape.time.presentation.dto.ReservationTimeRequest;
 import roomescape.time.presentation.dto.ReservationTimeResponse;
@@ -22,6 +26,8 @@ class ReservationTimeValidatorTest {
     @Autowired
     private ReservationTimeService timeService;
 
+    @Autowired
+    private ReservationService reservationService;
 
     @Test
     @DisplayName("입력받은 ID에 해당하는 시간이 없으면 예외를 던진다.")
@@ -37,5 +43,16 @@ class ReservationTimeValidatorTest {
                 new ReservationTimeRequest(LocalTime.of(10, 0)));
         Assertions.assertThatCode(() -> validator.validateDeletable(response.id()))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    @DisplayName("예약과 연결된 시간을 지우려고 하면 예외를 던진다.")
+    void validateConnectedWithReservation() {
+        ReservationTimeResponse response = timeService.addReservationTime(
+                new ReservationTimeRequest(LocalTime.of(10, 0)));
+        reservationService.addReservation(
+                new ReservationRequest("브라운", LocalDate.of(2026, 5, 20), response.id()));
+        Assertions.assertThatThrownBy(() -> timeService.deleteReservationTime(response.id()))
+                .isInstanceOf(ReservationTimeInUseException.class);
     }
 }
