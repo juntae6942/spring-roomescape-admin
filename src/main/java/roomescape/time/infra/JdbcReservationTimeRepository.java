@@ -3,6 +3,7 @@ package roomescape.time.infra;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -45,9 +46,9 @@ public class JdbcReservationTimeRepository implements ReservationTimeRepository 
     }
 
     @Override
-    public ReservationTime findById(Long id) {
+    public Optional<ReservationTime> findById(Long id) {
         String sql = "SELECT id, start_at FROM reservation_time WHERE id=:id";
-        return jdbcTemplate.queryForObject(sql, Map.of("id", id), rowMapper);
+        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, Map.of("id", id), rowMapper));
     }
 
     @Override

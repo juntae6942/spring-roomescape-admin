@@ -1,11 +1,10 @@
 package roomescape.reservation.domain;
 
 import java.util.List;
-import org.springframework.stereotype.Repository;
 
-@Repository
 public interface ReservationRepository {
     Reservation save(Reservation reservation);
     List<Reservation> findAll();
+    boolean existsByReservationTime(Long timeId);
     void deleteById(Long id);
 }

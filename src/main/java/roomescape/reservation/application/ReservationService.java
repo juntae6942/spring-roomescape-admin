@@ -24,7 +24,7 @@ public class ReservationService {
     }
 
     public ReservationResponse addReservation(ReservationRequest request) {
-        ReservationTime time = timeRepository.findById(request.timeId());
+        ReservationTime time = timeRepository.getById(request.timeId());
         return ReservationResponse.from(reservationRepository.save(ReservationRequest.toEntity(request, time)));
     }
 
