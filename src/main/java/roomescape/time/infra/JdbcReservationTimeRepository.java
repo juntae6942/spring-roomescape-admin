@@ -41,14 +41,15 @@ public class JdbcReservationTimeRepository implements ReservationTimeRepository 
 
     @Override
     public List<ReservationTime> findAll() {
-        String sql = "SELECT id, start_at FROM reservation_time";
+        String sql = "SELECT id, start_at FROM reservation_time ORDER BY start_at ASC";
         return jdbcTemplate.query(sql, rowMapper);
     }
 
     @Override
     public Optional<ReservationTime> findById(Long id) {
         String sql = "SELECT id, start_at FROM reservation_time WHERE id=:id";
-        return Optional.ofNullable(jdbcTemplate.queryForObject(sql, Map.of("id", id), rowMapper));
+        List<ReservationTime> results = jdbcTemplate.query(sql, Map.of("id", id), rowMapper);
+        return results.stream().findFirst();
     }
 
     @Override
@@ -60,6 +61,6 @@ public class JdbcReservationTimeRepository implements ReservationTimeRepository 
     @Override
     public boolean existsById(Long id) {
         String sql = "SELECT EXISTS (SELECT 1 FROM reservation_time WHERE id=:id)";
-        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql,Map.of("id", id),Boolean.class));
+        return Boolean.TRUE.equals(jdbcTemplate.queryForObject(sql,Map.of("id", id), Boolean.class));
     }
 }
