@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import roomescape.reservation.domain.exception.ReservationNotFoundException;
 import roomescape.reservation.presentation.dto.ReservationRequest;
 import roomescape.time.domain.exception.ReservationTimeNotFoundException;
 
@@ -30,5 +31,12 @@ class ReservationServiceTest {
                 )
             )
         ).isInstanceOf(ReservationTimeNotFoundException.class);
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 예약ID를 입력하면 예외를 던진다.")
+    void wrongReservationId() {
+        Assertions.assertThatThrownBy(() -> service.cancelReservation(1L))
+                .isInstanceOf(ReservationNotFoundException.class);
     }
 }
