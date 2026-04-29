@@ -15,11 +15,11 @@ public class ReservationTimeValidator {
     private final ReservationTimeRepository reservationTimeRepository;
 
     public void validateDeletable(Long timeId) {
-        if (reservationRepository.existsByReservationTime(timeId)) {
-            throw new ReservationTimeInUseException("해당 시간에 예약이 존재합니다.");
-        }
         if (!reservationTimeRepository.existsById(timeId)) {
             throw new ReservationTimeNotFoundException("존재하지 않는 시간ID 입니다.");
+        }
+        if (reservationRepository.existsByReservationTime(timeId)) {
+            throw new ReservationTimeInUseException("해당 시간에 예약이 존재합니다.");
         }
     }
 }
