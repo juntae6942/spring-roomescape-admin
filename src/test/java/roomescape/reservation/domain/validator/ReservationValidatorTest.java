@@ -7,7 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.annotation.DirtiesContext;
 import roomescape.reservation.application.ReservationService;
 import roomescape.reservation.domain.exception.ReservationNotFoundException;
 import roomescape.reservation.presentation.dto.ReservationRequest;
@@ -15,8 +15,8 @@ import roomescape.reservation.presentation.dto.ReservationResponse;
 import roomescape.time.application.ReservationTimeService;
 import roomescape.time.presentation.dto.ReservationTimeRequest;
 
-@Transactional
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 class ReservationValidatorTest {
 
     @Autowired
