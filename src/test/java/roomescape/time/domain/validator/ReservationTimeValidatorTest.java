@@ -1,5 +1,8 @@
 package roomescape.time.domain.validator;
 
+import static org.springframework.boot.test.context.SpringBootTest.*;
+import static org.springframework.test.annotation.DirtiesContext.*;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import org.assertj.core.api.Assertions;
@@ -16,8 +19,8 @@ import roomescape.time.domain.exception.ReservationTimeNotFoundException;
 import roomescape.time.presentation.dto.ReservationTimeRequest;
 import roomescape.time.presentation.dto.ReservationTimeResponse;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
 class ReservationTimeValidatorTest {
 
     @Autowired
