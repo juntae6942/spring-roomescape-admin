@@ -58,7 +58,8 @@ public class JdbcReservationRepository implements ReservationRepository {
         String sql = "SELECT r.id AS r_id, r.name, r.date, " +
                 "t.id AS t_id, t.start_at " +
                 "FROM reservation r " +
-                "JOIN reservation_time t ON r.time_id = t.id";
+                "JOIN reservation_time t ON r.time_id = t.id " +
+                "ORDER BY r.date ASC, t.start_at ASC";
         return jdbcTemplate.query(sql, rowMapper);
     }
 
