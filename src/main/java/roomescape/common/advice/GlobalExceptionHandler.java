@@ -9,6 +9,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleUnhandledException(Exception e) {
-        return ResponseEntity.internalServerError().body("서버 내부에서 예상치 못한 문제가 발생했습니다.");
+        return ResponseEntity.internalServerError().body("서버 내부에서 예상치 못한 문제가 발생했습니다. " + e.getMessage());
     }
 }
