@@ -3,6 +3,7 @@ package roomescape.time.application;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import roomescape.time.domain.ReservationTime;
 import roomescape.time.domain.validator.ReservationTimeValidator;
 import roomescape.time.domain.ReservationTimeRepository;
 import roomescape.time.presentation.dto.ReservationTimeRequest;
@@ -24,7 +25,8 @@ public class ReservationTimeService {
 
 
     public ReservationTimeResponse addReservationTime(ReservationTimeRequest request) {
-        return ReservationTimeResponse.from(repositoryTimeRepository.save(ReservationTimeRequest.toEntity(request)));
+        ReservationTime time = ReservationTimeRequest.toEntity(request);
+        return ReservationTimeResponse.from(repositoryTimeRepository.save(time));
     }
 
     public void deleteReservationTime(Long id) {
