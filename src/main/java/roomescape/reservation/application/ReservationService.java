@@ -4,6 +4,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import roomescape.reservation.domain.ReservationRepository;
+import roomescape.reservation.domain.validator.ReservationValidator;
 import roomescape.reservation.presentation.dto.ReservationRequest;
 import roomescape.reservation.presentation.dto.ReservationResponse;
 import roomescape.time.domain.ReservationTime;
@@ -15,6 +16,7 @@ public class ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationTimeRepository timeRepository;
+    private final ReservationValidator reservationValidator;
 
     public List<ReservationResponse> getReservations() {
         return reservationRepository.findAll()
@@ -29,6 +31,7 @@ public class ReservationService {
     }
 
     public void cancelReservation(Long id) {
+        reservationValidator.validateDeletable(id);
         reservationRepository.deleteById(id);
     }
 }
