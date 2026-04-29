@@ -2,7 +2,7 @@ package roomescape.time.domain;
 
 import java.util.List;
 import java.util.Optional;
-import roomescape.reservation.domain.exception.ReservationNotFoundException;
+import roomescape.time.domain.exception.ReservationTimeNotFoundException;
 
 public interface ReservationTimeRepository {
     ReservationTime save(ReservationTime reservationTime);
@@ -12,6 +12,6 @@ public interface ReservationTimeRepository {
     boolean existsById(Long id);
 
     default ReservationTime getById(Long id) {
-        return findById(id).orElseThrow(ReservationNotFoundException::new);
+        return findById(id).orElseThrow(() -> new ReservationTimeNotFoundException("존재하지 않는 시간ID 입니다."));
     }
 }
